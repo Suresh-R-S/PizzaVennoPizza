@@ -1,0 +1,32 @@
+ <head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/pizza.css">
+</head>
+<div>
+<div id="d1">
+<h1>PIZZA VENNO PIZZA</h1>
+</div>
+<div id="d2">
+<input type="textbox" ng-model="aname" placeholder="username"/><br/>
+<input type="password" ng-model="apwd" placeholder="password"/><br/>
+<a style="text-decoration:none;" href="#/login">Admin Login</a><br/><br/>
+<a style="text-decoration:none;" href="#/cart">View Cart</a>
+<a style="text-decoration:none;" href="#/cart"><h3>Add to cart</h3></a>
+</div>
+<div id="d3">
+<table>
+<tr><h2>{{pizzadetail.p_name}}</h2><br/></tr>
+<tr><img ng-src="{{pizzadetail.pic}}" width="150"><br/></tr>
+<tr>{{pizzadetail.desc}}<br/></tr>
+<tr><h3>Rate: &#8377{{pizzadetail.rate}}</h3></tr>
+<tr>
+Quantity:
+		<select ng-model="obj.qty" ng-click = "test()">
+  			<option value="1" selected="">1</option>
+  			<option value="2">2</option>
+  			<option value="3">3</option>
+  			<option value="4">4</option>
+  			<option value="5">5</option>
+		</select> 
+</tr>
+<br/><br/><br/>   
+</div>

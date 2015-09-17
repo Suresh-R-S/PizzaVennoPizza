@@ -1,0 +1,177 @@
+<html ng-app="pizzaApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Pizza Venno Pizza</title>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
+    <script>
+      var pApp = angular.module('pizzaApp', ['ngRoute']);
+
+      pApp.config(function($routeProvider) {
+        $routeProvider.
+          when('/', {
+            templateUrl: 'piz_details.html',
+            controller: 'pCtrl'
+          }).
+          when('/cart', {
+            templateUrl: 'piz_cart.html',
+            controller: 'cCtrl'
+          }).
+          when('/userdetails', {
+            templateUrl: 'userdetails.html',
+            controller: 'uCtrl'
+          }).
+           when('/login', {
+            templateUrl: 'adminlogin.html',
+            controller: 'aCtrl'
+          }).
+           when('/login/:Id', {
+            templateUrl: 'adminlogin.html',
+            controller: 'dCtrl'
+          }).
+            when('/deliveredlist', {
+            templateUrl: 'delivered.html',
+            controller: 'dlCtrl'
+          }).
+          when('/:pName', {
+            templateUrl: 'piz_page.html',
+            controller: 'ppCtrl'
+          }).
+          otherwise({
+            redirectTo: '/'
+          });
+      });
+
+       pApp.service('serv', function (){
+        var arr = [];
+        var total = 0;
+        var count = 0;
+        this.p1 = function(obj){
+          arr.push(obj);
+          count=count+1;
+          total = total + obj.cost;
+          };
+        this.p2 = function(){
+           return arr; 
+        };
+        this.p3 = function(){
+           return total; 
+        };
+        this.p4 = function(){
+           return count; 
+        };
+       
+       }); 
+
+
+       pApp.controller('pCtrl', function ($scope, $http){
+        $http.get('/pizza').success(function (data) {
+          $scope.details = data;
+        });
+      });
+
+       pApp.controller('dlCtrl', function ($scope, $http){
+        $http.get('/deliveredlist').success(function (data) {
+          $scope.details = data;
+        });
+      });
+
+
+       pApp.controller('dCtrl', function ($scope, $http,$routeParams){
+        $scope.Id = $routeParams.Id;
+        console.log("Contact:",$scope.Id);
+        $scope.dummy = {};
+        $scope.dummy.Id = $scope.Id;
+
+         $http({
+          method  : 'POST',
+          url     : '/delivery',
+          data    : $scope.dummy, //forms user object
+          headers : {'Content-Type': 'application/json'} 
+         })
+          .success(function(data) {
+            alert("delivered..Go back to Home Page");
+            if (data.errors) {
+              // Showing errors.
+              $scope.errorName = data.errors.name;
+              $scope.errorUserName = data.errors.username;
+              $scope.errorEmail = data.errors.email;
+            } 
+          });
+
+          $http.get('/viewdetails').success(function (data) {
+          $scope.details = data;
+        });
+      });
+
+
+       pApp.controller('aCtrl', function ($scope, $http, serv){
+        $http.get('/viewdetails').success(function (data) {
+          $scope.details = data;
+        });
+        var obj1 = serv.p2();
+        $scope.len = obj1.length;
+        console.log("count len :",$scope.len);
+      });
+
+       pApp.controller('uCtrl', function ($scope, $http,serv){
+        $scope.submit = function() {
+        var obj1 = serv.p2();
+        console.log("Obj 1: ",obj1);
+        var total = serv.p3();
+        console.log("gtotal:",total);
+        $scope.obj.order=obj1;
+        $scope.obj.d_status= true;
+        $http({
+          method  : 'POST',
+          url     : '/orderdetails',
+          data    : $scope.obj, //forms user object
+          headers : {'Content-Type': 'application/json'} 
+         })
+          .success(function(data) {
+            alert("Added..Go Back to Home Page");
+            if (data.errors) {
+              // Showing errors.
+              $scope.errorName = data.errors.name;
+              $scope.errorUserName = data.errors.username;
+              $scope.errorEmail = data.errors.email;
+            } 
+          });
+        };
+      });
+
+
+       pApp.controller('cCtrl', function ($scope, $http, serv){
+         $scope.details = serv.p2();
+         $scope.total = serv.p3();
+      });
+
+      pApp.controller('ppCtrl', function ($scope, $routeParams, $http,serv){
+        $scope.name = $routeParams.pName;
+		    $http.get('/pizza').success(function(data) {
+          $scope.pizzadetail = data.filter(function(entry){
+            return entry.p_name === $scope.name;
+          })[0];
+
+          $scope.test = function() {
+            var obj = {};
+
+           obj.p_name = $scope.pizzadetail.p_name;
+           obj.rate = $scope.pizzadetail.rate;
+           obj.qty = $scope.obj.qty;
+           obj.cost = obj.rate * obj.qty;
+           console.log("name: ",obj.p_name);
+           console.log("rate: ",obj.rate);
+           console.log("qty: ",$scope.obj.qty);
+            serv.p1(obj);
+            console.log("P2:",serv.p2());
+          };
+
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div ng-view></div>
+  </body>
+</html>

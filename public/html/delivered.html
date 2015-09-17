@@ -1,0 +1,41 @@
+<head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/pizza.css">
+<style>
+th
+{
+	text-align: left;
+}
+</style>
+</head>
+<div>
+<div id="d1">
+<h1>PIZZA VENNO PIZZA</h1>
+</div>
+<div id="d2">
+<a href="#/login" style="text-decoration:none;">Back</a><br/><br/>
+<a href="#/" style="text-decoration:none;">Home</a>
+</div>
+<div id="d3">
+<h2>Delivered List</h2>
+<table style="width:200%;" border="1px">
+<tr>
+<th>Name</th>
+<th>Address</th>
+<th>Contact No.</th>
+<th>Order</th>
+</tr>
+<tr ng-repeat="i in details">
+	<td>{{i.u_name}}</td>
+	<td>{{i.addr}}</td>
+	<td>{{i.cno}}</td>
+	<td>
+	<ul ng-repeat="j in i.order"><br/>
+      <li>Pizza name: {{j.p_name}}</li>
+      <li>Rate: {{j.rate}}</li>
+      <li>Quantity: {{j.qty}}</li>
+      <li>Cost: {{j.cost}}</li>
+    </ul>
+	</td>
+</tr>
+</table>
+</div>
