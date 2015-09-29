@@ -1,0 +1,24 @@
+<!--
+<head>
+<link rel="stylesheet" type="text/css" href="/stylesheets/pizza.css">
+</head>
+<div id="d1">
+<h1>PIZZA VENNO PIZZA</h1>
+</div>
+<div id="d2">
+<input ng-model="t1.p_name" type="text" placeholder="search pizza.."/><br/><br/>
+<input type="textbox" ng-model="aname" placeholder="username"/><br/>
+<input type="password" ng-model="apwd" placeholder="password"/><br/>
+<input type="button" value="admin login" ng-click="l_check(aname,apwd)"/><br/><br/>
+<a style="text-decoration:none;" href="#/cart">View Cart</a>
+</div>-->
+
+<div>
+<table>
+	<tr ng-repeat="items in pCtrl.details | filter:t1">
+
+		<td><a style="text-decoration:none;" href="#/{{items.p_name}}">{{items.p_name}}</a></td>
+		<td><a href="#/{{items.p_name}}"><img ng-src="{{items.pic}}" width="100"></a></td>
+	</tr>
+</table>
+</div>

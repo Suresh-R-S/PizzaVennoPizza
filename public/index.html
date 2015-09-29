@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="pvp">
+
+<head>
+<title>Pizza Venno Pizza</title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/pizza.css">
+</head>
+
+<body>
+<div id="d1">
+<h1>PIZZA VENNO PIZZA</h1>
+</div>
+<div id="d2">
+<input ng-model="t1.p_name" type="text" placeholder="search pizza.."/><br/><br/>
+<a style="text-decoration:none;" href="#/adminlogin">Admin Login</a><br/><br/>
+<!--<a style="text-decoration:none;" href="#/cart">View Cart</a>-->
+</div>
+<div ng-view id="d3">
+</div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.10/angular-route.min.js"></script>
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript" src="/user/user.js"></script>
+<script type="text/javascript" src="/admin/admin.js"></script>
+<script type="text/javascript" src="/user/p_details/piz_detailsCtrl.js"></script>
+<script type="text/javascript" src="/user/p_details/piz_detailsServ.js"></script>
+<script type="text/javascript" src="/user/page/piz_pageCtrl.js"></script>
+<script type="text/javascript" src="/user/page/piz_pageServ.js"></script>
+<script type="text/javascript" src="/user/cart/piz_cartCtrl.js"></script>
+<script type="text/javascript" src="/user/u_details/userServ.js"></script>
+<script type="text/javascript" src="/user/u_details/userCtrl.js"></script>
+<script type="text/javascript" src="/admin/adminlogin/adminloginCtrl.js"></script>
+<script type="text/javascript" src="/admin/adminhome/adminhomeCtrl.js"></script>
+<script type="text/javascript" src="/admin/adminhome/adminhomeServ.js"></script>
+
+</body>
+</html>
+
+
